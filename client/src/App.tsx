@@ -9,6 +9,10 @@ import Admin from './Composants/Admin/Admin';
 import { userContext } from './Composants/Contexte/Contexte';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Menu from './Composants/Menu/Menu'
+import Accueil from './Composants/Accueil/Accueil';
+import Commercial from './Composants/Commercial/Commercial';
+import Logout from './Composants/Logout/Logout';
 
 function App() {
 
@@ -17,25 +21,26 @@ function App() {
   useEffect( ( ) => {
     axios.get('/api/user/info').then(reponse => {
        setUserData(reponse.data)
-      //  console.log(userData)
+       console.log(reponse.data)
     })
   }, [])
 
   return (
-    <div className="App">
+    // <div className="App">
       <userContext.Provider value={userData}>
-        <BrowserRouter>
         <Router>
           <Routes>
             <Route path='/' element={<Login></Login>}></Route>
-            <Route path='/users/create' element={<UsersCreate></UsersCreate>}></Route>
-            <Route path='/users' element={<Users></Users>}></Route>
-            <Route path='/admin' element={<Admin></Admin>}></Route>
+            <Route path='/users/create' element={<><Menu></Menu><UsersCreate></UsersCreate></>}></Route>
+            <Route path='/users' element={<><Menu></Menu><Users></Users></>}></Route>
+            <Route path='/admin' element={<><Menu></Menu><Admin></Admin></>}></Route>
+            <Route path='/commercial' element={<><Menu></Menu><Commercial></Commercial></>}></Route>
+            <Route path='/accueil' element={<><Menu></Menu><Accueil></Accueil></>}></Route>
+            <Route path='/logout' element={<><Menu></Menu><Logout></Logout></>}></Route>
           </Routes>
         </Router>
-        </BrowserRouter>
       </userContext.Provider>
-    </div>
+    // </div>
   );
 }
 

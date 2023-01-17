@@ -1,70 +1,58 @@
-import { useEffect, useState } from "react";
-import React from "react";
-import axios, { AxiosResponse } from 'axios';
+import React, { useState } from "react"
+import axios, { AxiosResponse } from "axios"
 import './Login.css'
-import Admin from "../Admin/Admin";
+import logo from "../../Images/logoweb.png"
+import cle from '../../Images/cle-de-la-maison.png'
+import user from "../../Images/compte.png"
 
-function Login() {
+function Login () 
+{
+    const [userLogin, setuserLogin] = useState<string>("")
+    const [userPassword, setuserPassword] = useState<string>("")
 
-    const [userLogin, setUserLogin] = useState<string>("")
-    const [userPassword, setUserPassword] = useState<string>("")
-    const [userIsLogged, setUserIsLogged] = useState<boolean>(false)
-
-    type User = {
-        login: string,
-        password: string
+    const handleUserLogin = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setuserLogin(event.target.value)
     }
 
-    const handleLogin = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setUserLogin(event.target.value)
-    }
-
-    const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setUserPassword(event.target.value)
+    const handleUserPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setuserPassword(event.target.value)
     }
 
     const connectUser = async () => {
-
         let reponse : AxiosResponse = await axios.post('/api/login/check', {
-            login: userLogin,
-            password: userPassword
+            login : userLogin,
+            password : userPassword,
         })
 
         if(reponse.data === "ok")
         {
-            document.location.href = "/admin"
+            document.location.href = "/accueil"
         }
-        else 
+        else
         {
-            alert("Mauvais utilisateur / mot de passe")
+            alert("Mauvais Login/Motdepasse")
         }
 
     }
 
-    useEffect(() => {
-        axios.get('/api/user/islogged').then(reponse => {
-            setUserIsLogged(reponse.data)
-        })
-    }, [userIsLogged])
-
-    if(userIsLogged)
-    {
-        return (
-            <Admin></Admin>
-        )
-    }
-    else
-    {
-        return (
-            <div className="Login">
-                <h1>Se connecter : </h1>
-                <input type="text" onChange={handleLogin} placeholder="Entrez un login"></input>
-                <input type="password" onChange={handlePassword} placeholder="Entrez un password"></input>
-                <button onClick={connectUser}>Se connecter</button>
+    return (
+        <div className="Login">
+            <div className="login-cadre">
+                <img alt="logo-accueil" className="logo-accueil" src={logo}></img>
+                <div className="login-cadre-user">
+                    <img alt="login-cle" src={user}></img>
+                    <input type="text" onChange={handleUserLogin} placeholder="Entrer un nom d'utilisateur"></input>
+                </div>
+                <hr className="login-ligne"></hr>
+                <div className="login-cadre-pwd">
+                    <img alt="login-user" src={cle}></img>
+                    <input type="secure" onChange={handleUserPassword} placeholder="Entrer un mot de passe"></input>   
+                </div>
+                <hr className="login-ligne"></hr>
+                <button onClick={connectUser}> Se Connecter</button> 
             </div>
-        )
-    }
-   
+        </div>
+    )
 }
 
 export default Login

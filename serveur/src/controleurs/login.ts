@@ -10,9 +10,8 @@ type User = {
 
 routeur.post('/check', async(req: Request, res: Response, next: NextFunction) => {
 
-    passport.authenticate('local', (error, user) => {
-        console.log(user)
-        req.logIn(user , err => {
+    passport.authenticate('local', (err, user) => {
+        req.logIn(user, err => {
             if(user)
             {
                 res.json("ok")

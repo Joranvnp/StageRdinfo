@@ -66,12 +66,14 @@ function UsersCreate() {
 
     return (
         <div className="UsersCreate">
-            <h1>Créer un utilisateur : </h1>
-            <input type="text" onChange={handlePrenom} placeholder="Entrez un Prenom"></input>
-            <input type="text" onChange={handleNom} placeholder="Entrez un nom"></input>
-            <p>Login : {userLogin}</p>
-            <input type="text" onChange={handleEmail} placeholder="Entrez un Email"></input>
-            <input type="password" onChange={handlePassword} placeholder="Entrez un mot de passe"></input>
+            <div className="usersCreate-form">
+                <h1>Créer un utilisateur : </h1>
+                <input className="usersCreate-input" type="text" onChange={handlePrenom} placeholder="Entrez un Prenom"></input>
+                <input className="usersCreate-input" type="text" onChange={handleNom} placeholder="Entrez un nom"></input>
+                <p>Login : {userLogin}</p>
+                <input className="usersCreate-input" type="text" onChange={handleEmail} placeholder="Entrez un Email"></input>
+                <input className="usersCreate-input" type="password" onChange={handlePassword} placeholder="Entrez un mot de passe"></input>
+            </div>
             <button onClick={createUser}>Créer</button>
         </div>
     )

@@ -1,0 +1,28 @@
+
+
+.Menu {
+    background-color: rgb(83,104,120);
+    align-items: center;
+    display: flex;
+    height: 3em;
+    color: white;
+    justify-content: space-evenly;
+    border-bottom: 2px;
+    border: 1px solid black;
+    text-decoration: none;
+}
+
+h2 {
+    text-decoration: none;
+    color: white;
+}
+
+.link {
+    text-decoration: none;
+    color: white;
+}
+
+.signup {
+    display: flex;
+    justify-content: right;
+}

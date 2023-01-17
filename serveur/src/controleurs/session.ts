@@ -21,7 +21,7 @@ routeur.use(session({
     cookie: {
         httpOnly: true,
         sameSite: "strict",
-        secure: false,
+        secure: true,
         maxAge: 24 * 60 * 60 * 1000
     }
 }));

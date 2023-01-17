@@ -47,6 +47,7 @@ passport.serializeUser((user: any, done: any) => {
         date: new Date()
     }
 
+    // console.log(userInfos)
     done(null, userInfos)
 })
 
@@ -63,6 +64,7 @@ passport.deserializeUser(async (userInfos: any, done: any) => {
         date: userInfos.date
     }
 
+    // console.log(userdata)
     done(null, usergen)
 
 })
