@@ -40,7 +40,7 @@ passport_1.default.serializeUser((user, done) => {
         id: user._id,
         date: new Date()
     };
-    console.log(userInfos);
+    // console.log(userInfos)
     done(null, userInfos);
 });
 passport_1.default.deserializeUser((userInfos, done) => __awaiter(void 0, void 0, void 0, function* () {
@@ -53,7 +53,7 @@ passport_1.default.deserializeUser((userInfos, done) => __awaiter(void 0, void 0
         login: userdata.login,
         date: userInfos.date
     };
-    console.log(userdata);
+    // console.log(userdata)
     done(null, usergen);
 }));
 exports.default = passport_1.default;

@@ -51,8 +51,6 @@ function UsersCreate() {
             password: userPassword
         }
 
-        const message = "ok"
-
         let reponse : AxiosResponse = await axios.post("/api/user/create", {
             data : requete
         })

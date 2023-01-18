@@ -13,6 +13,9 @@ import Menu from './Composants/Menu/Menu'
 import Accueil from './Composants/Accueil/Accueil';
 import Commercial from './Composants/Commercial/Commercial';
 import Logout from './Composants/Logout/Logout';
+import CreerDevis from './Composants/Commercial/Devis/CreerDevis/CreerDevis';
+import ListeDevis from './Composants/Commercial/Devis/ListeDevis/ListeDevis';
+import EditDevis from './Composants/Commercial/Devis/EditDevis/EditDevis';
 
 function App() {
 
@@ -37,6 +40,9 @@ function App() {
             <Route path='/commercial' element={<><Menu></Menu><Commercial></Commercial></>}></Route>
             <Route path='/accueil' element={<><Menu></Menu><Accueil></Accueil></>}></Route>
             <Route path='/logout' element={<><Menu></Menu><Logout></Logout></>}></Route>
+            <Route path='/creerdevis' element={<><Menu></Menu><CreerDevis></CreerDevis></>}></Route>
+            <Route path='/listedevis' element={<><Menu></Menu><ListeDevis></ListeDevis></>}></Route>
+            <Route path='/editdevis/:id' element={<><Menu></Menu><EditDevis></EditDevis></>}></Route>
           </Routes>
         </Router>
       </userContext.Provider>

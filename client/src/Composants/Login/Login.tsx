@@ -46,7 +46,7 @@ function Login ()
                 <hr className="login-ligne"></hr>
                 <div className="login-cadre-pwd">
                     <img alt="login-user" src={cle}></img>
-                    <input type="secure" onChange={handleUserPassword} placeholder="Entrer un mot de passe"></input>   
+                    <input type="password" onChange={handleUserPassword} placeholder="Entrer un mot de passe"></input>   
                 </div>
                 <hr className="login-ligne"></hr>
                 <button onClick={connectUser}> Se Connecter</button> 

@@ -41,6 +41,10 @@ app.use("/api/user", user)
 import logout from './controleurs/logout'
 app.use("/api/logout", logout)
 
+import devis from "./controleurs/devis"
+app.use("/api/devis", devis)
+
+
 //Mise en place du dossier Statique
 app.use(express.static(path.join(__dirname, '../../client/build')));
 

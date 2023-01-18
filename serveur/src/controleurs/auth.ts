@@ -4,7 +4,6 @@ import usersdb from '../modeles/userdb';
 import passport from "passport";
 import { Strategy as localStrategy } from 'passport-local';
 import { ObjectId } from "bson";
-import { userInfo, UserInfo } from "os";
 
 type userobject = {
     _id: string,
@@ -53,7 +52,7 @@ passport.serializeUser((user: any, done: any) => {
 
 passport.deserializeUser(async (userInfos: any, done: any) => {
     
-    let userdata = await usersdb.findOne({ "_id": userInfos.id })
+    let userdata = await usersdb.findOne({ "_id": new ObjectId(userInfos.id)})
 
     let usergen : any = {
         id: userdata._id,

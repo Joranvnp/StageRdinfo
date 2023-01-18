@@ -5,16 +5,8 @@ import { ObjectID } from "bson";
 
 const routeur: IRouter = express.Router()
 
-type Users = {
-    nom: string,
-    prenom: string,
-    email: string,
-    login: string,
-    password: string,
-}
-
 routeur.post('/create', async (req: Request, res: Response) => {
-    let { nom, prenom, email, login, password } : Users = req.body.data
+    const { nom, prenom, email, login, password } = req.body.data
 
     console.log(nom)
 
@@ -24,13 +16,22 @@ routeur.post('/create', async (req: Request, res: Response) => {
 
     let hashPassword : string = await bcrypt.hashSync(password, salt)
 
-    usersdb.insertOne({
-        nom: nom,
-        prenom: prenom,
-        email: email,
-        login: login,
-        password: hashPassword
-    })
+    let user = await usersdb.findOne({"login": login})
+
+    if(user)
+    {
+        res.json("existe")
+    }
+    else
+    {
+        usersdb.insertOne({
+            nom: nom,
+            prenom: prenom,
+            email: email,
+            login: login,
+            password: hashPassword
+        })
+    }
 
     res.json("ok")
 })

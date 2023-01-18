@@ -31,6 +31,8 @@ const login_1 = __importDefault(require("./controleurs/login"));
 app.use("/api/login", login_1.default);
 const user_1 = __importDefault(require("./controleurs/user"));
 app.use("/api/user", user_1.default);
+const logout_1 = __importDefault(require("./controleurs/logout"));
+app.use("/api/logout", logout_1.default);
 //Mise en place du dossier Statique
 app.use(express_1.default.static(path_1.default.join(__dirname, '../../client/build')));
 //Pages non authentifi´ees

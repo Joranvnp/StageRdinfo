@@ -1,0 +1,31 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.CreerDevis {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.creeDevis-data-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.creerDevis-data-submit {
+    /* position: absolute; */
+    /* display: flex; */
+    align-items: center;
+    border: 1px solid grey;
+    
+}
+
+/* .h2 {
+
+} */
+
+.center {
+    align-items: center;
+}
