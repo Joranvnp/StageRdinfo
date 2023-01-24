@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import usersdb from '../modeles/userdb';
 import passport from "passport";
 import { Strategy as localStrategy } from 'passport-local';
-import { ObjectId } from "bson";
+import { ObjectID, ObjectId } from "bson";
 
 type userobject = {
     _id: string,
@@ -52,19 +52,27 @@ passport.serializeUser((user: any, done: any) => {
 
 passport.deserializeUser(async (userInfos: any, done: any) => {
     
+    console.log(new ObjectID(userInfos.id))
     let userdata = await usersdb.findOne({ "_id": new ObjectId(userInfos.id)})
 
-    let usergen : any = {
-        id: userdata._id,
-        nom: userdata.nom,
-        prenom: userdata.prenom,
-        email: userdata.email,
-        login: userdata.login,
-        date: userInfos.date
+    if (userdata) {
+        let usergen : any = {
+            id: userdata._id,
+            nom: userdata.nom,
+            prenom: userdata.prenom,
+            email: userdata.email,
+            login: userdata.login,
+            date: userInfos.date
+        }
+
+        done(null, usergen)
+    } else {
+        done("Utilisateur non trouvé", null)
     }
+    
 
     // console.log(userdata)
-    done(null, usergen)
+
 
 })
 

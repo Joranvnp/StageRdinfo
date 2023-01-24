@@ -1,27 +1,75 @@
-
-
 .Menu {
-    background-color: rgb(83,104,120);
+    background-color: rgb(83, 104, 120);
     align-items: center;
     display: flex;
     height: 3em;
     color: white;
     justify-content: space-evenly;
-    border-bottom: 2px;
-    border: 1px solid black;
+    border-bottom: 3px solid black;
     text-decoration: none;
-}
-
-h2 {
-    text-decoration: none;
+    font-family: 'Open Sans', sans-serif;
+    position: relative;
 }
 
 .link {
+    color: black;
     text-decoration: none;
-    color: white;
 }
 
-.signup {
+.menu-cadre-user {
+    width: 4%;
     display: flex;
-    justify-content: right;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.menu-cadre-user img {
+    width: 100%;
+    height: auto;
+}
+
+.dropdown-toggle {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 1em;
+    padding: 0;
+    margin-right: 10px;
+}
+    
+.dropdown-menu {
+    background-color: rgb(83, 104, 120);
+    border: none;
+    padding: 0.5em 1em;
+    color: black;
+    text-decoration: none;
+    position: absolute;
+    right: 0;
+    top: 3em;
+}
+
+.dropdown-item {
+    color: white;
+    padding: 0.5em 1em;
+}
+    
+.dropdown-item:hover {
+    background-color: rgb(83, 104, 120);
+}
+    
+
+.dropdown-item:active {
+    background-color: rgb(83, 104, 121);
+}
+    
+.dropdown-item a {
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown {
+    display: flex;
+    flex-direction: column; /* pour afficher les éléments en colonne */
+    align-items: flex-end; /* pour aligner les éléments à droite */
 }

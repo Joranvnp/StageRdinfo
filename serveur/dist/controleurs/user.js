@@ -18,18 +18,24 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const bson_1 = require("bson");
 const routeur = express_1.default.Router();
 routeur.post('/create', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { nom, prenom, email, login, password } = req.body.data;
+    const { nom, prenom, email, login, password } = req.body.data;
     console.log(nom);
     let saltCount = 10;
     let salt = yield bcrypt_1.default.genSaltSync(saltCount);
     let hashPassword = yield bcrypt_1.default.hashSync(password, salt);
-    userdb_1.default.insertOne({
-        nom: nom,
-        prenom: prenom,
-        email: email,
-        login: login,
-        password: hashPassword
-    });
+    let user = yield userdb_1.default.findOne({ "login": login });
+    if (user) {
+        res.json("existe");
+    }
+    else {
+        userdb_1.default.insertOne({
+            nom: nom,
+            prenom: prenom,
+            email: email,
+            login: login,
+            password: hashPassword
+        });
+    }
     res.json("ok");
 }));
 routeur.get('/list', (req, res) => __awaiter(void 0, void 0, void 0, function* () {

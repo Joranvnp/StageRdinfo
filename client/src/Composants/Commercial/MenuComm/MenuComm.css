@@ -1,10 +1,10 @@
-.MenuComm {
+/* .MenuComm {
     display: flex;
     top: 0;
     width: 15%;
     height: 100%;
     left: 0;
-    background-color: grey;
+    background-color:lightslategray;
     flex-direction: column;
     align-items: center;
     margin-right: 10px;
@@ -12,4 +12,20 @@
 
 .p {
     color: white;
+} */
+
+.MenuComm {
+    display: flex;
+    top: 0;
+    width: 15%;
+    height: 100%;
+    left: 0;
+    background-color:whitesmoke;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.p {
+    color: black;
 }

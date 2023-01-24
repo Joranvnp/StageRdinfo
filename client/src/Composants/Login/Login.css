@@ -86,7 +86,7 @@
     cursor:pointer;
     background-color: whitesmoke;
     color:black;
-    font-weight:bold;
+    /* font-weight:bold; */
     border:1px solid gainsboro;
     height:35px;
     text-transform:uppercase;

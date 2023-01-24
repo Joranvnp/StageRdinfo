@@ -46,7 +46,6 @@ function ListeDevis() {
                     <tbody className="listedevis-tab-body">
                         {devisList.map(devis => 
                             <tr key={devis._id}>
-
                                 <td>{devis.code}</td>
                                 <td>{devis.client}</td>
                                 <td>{new Date(devis.date).toLocaleDateString()}</td>
@@ -54,7 +53,6 @@ function ListeDevis() {
                                 <td>{devis.modeReglement}</td>
                                 <td>{devis.dateLivraison}</td>
                                 <td>{devis.status}</td>
-
                             </tr>
                         )}
                     </tbody>

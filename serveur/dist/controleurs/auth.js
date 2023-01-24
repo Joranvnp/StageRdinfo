@@ -44,17 +44,20 @@ passport_1.default.serializeUser((user, done) => {
     done(null, userInfos);
 });
 passport_1.default.deserializeUser((userInfos, done) => __awaiter(void 0, void 0, void 0, function* () {
-    let userdata = yield userdb_1.default.findOne({ "_id": userInfos.id });
-    let usergen = {
+    /*
+    let userdata = await usersdb.findOne({ "_id": new ObjectId(userInfos.id)})
+
+    let usergen : any = {
         id: userdata._id,
         nom: userdata.nom,
         prenom: userdata.prenom,
         email: userdata.email,
         login: userdata.login,
         date: userInfos.date
-    };
+    }
+
     // console.log(userdata)
-    done(null, usergen);
+    done(null, usergen)*/
 }));
 exports.default = passport_1.default;
 //# sourceMappingURL=auth.js.map
