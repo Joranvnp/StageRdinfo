@@ -36,8 +36,22 @@ function ListeTiers() {
             <div className="listetiers-panel">
                 <h1>Liste tiers</h1>
                 <div className="listetierssearch">
-                    <h4>Recherche de Tiers</h4>
-                    <input type="text" placeholder="Nom du tiers"/>
+                    {/* <h4>Recherche de Tiers</h4>
+                    <input type="text" placeholder="Nom"/>
+                    <input type="text" placeholder="Prenom"/>
+                    <input type="text" placeholder="Adresse"/>
+                    <input type="text" placeholder="Seconde adresse"/>
+                    <input type="text" placeholder="Code postal"/>
+                    <input type="text" placeholder="Ville"/>
+                    <input type="text" placeholder="Pays"/>
+                    <input type="text" placeholder="Departement"/>
+                    <input type="text" placeholder="Telephone"/>
+                    <input type="text" placeholder="Email"/> */}
+                    {/* <select value="type">
+                        <option value="client">Client</option>
+                        <option value="association">Association</option>
+                        <option value="entreprise">Entreprise</option>
+                    </select> */}
                 </div>
                 <table className="listetiers-tab">
                     <thead className="listetiers-tab-entete">

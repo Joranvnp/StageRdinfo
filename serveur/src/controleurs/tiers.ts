@@ -22,7 +22,7 @@ type tiers = {
 }
 
 routeur.post('/creertiers', async(req:Request, res: Response) => {
-    console.log("salut")
+    // console.log("salut")
 
     const { nom, prenom, adresse, adresse2, codepostal, ville, pays, departement, telephone, email, type, commercial } = req.body.data;
 
@@ -33,7 +33,7 @@ routeur.post('/creertiers', async(req:Request, res: Response) => {
         res.json("existe")
     } else {
         tiersdb.insertOne({
-            nom: nom,
+            nom: nom.toLocaleLowerCase(),
             prenom: prenom,
             // code: code,  
             adresse: adresse,
@@ -57,13 +57,18 @@ routeur.get('/listetiers', async (req:Request, res: Response) => {
 
     res.json(listeTiers)
 
-    console.log(listeTiers)
+    // console.log(listeTiers)
 })
 
 routeur.post('/search', async (req: Request, res: Response) => {
-    let client = await tiersdb.find({"nomTiers": {$regex: req.body.search + ".*"}}).toArray()
 
-    
+    let search : string = req.body.search
+
+    let client = await tiersdb.find({"nom": {$regex: search.toLocaleLowerCase() + ".*"}}).toArray()
+
+    console.log(client)
+
+    res.json(client)
 })
 
 export default routeur

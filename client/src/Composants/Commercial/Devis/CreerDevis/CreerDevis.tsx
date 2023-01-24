@@ -6,27 +6,56 @@ import { idText } from "typescript";
 import MenuComm from "../../MenuComm/MenuComm";
 import './CreerDevis.css'
 
+type Devis = {
+    clientId: string | null,
+    date: string,
+    dureeValidité: string,
+    conditionReglement: string,
+    modeReglement: string,
+    dateLivraison: string
+}
+
+type Tiers = {
+    _id: string,
+    code: string,
+    nom: string,
+    adresse: string,
+    adresse2: string,
+    codepostal: string,
+    ville: string,
+    pays: string,
+    departement: string,
+    telephone:string,
+    email:string,
+    commercial: string
+}
+
 function CreerDevis() {
 
-    const [devisClient, setdevisClient] = useState<string>("")
     const [devisDate, setdevisDate] = useState<string>("")
     const [devisDureeValid, setdevisDureeValid] = useState<string>("")
     const [devisConditionReg, setdevisConditionReg] = useState<string>("")
     const [devisModReg, setdevisModReg] = useState<string>("")
     const [devisDateLivraison, setdevisDateLivraison] = useState<string>("")
+    const [selectClientNom, setSelectClientNom] = useState<string|null>("")
+    const [selectClientId, setSelectClientId] = useState<string|null>("")
+    const [isSelected, setIsSelected] = useState<boolean>(false)
+    const [resSearch, setResSearch] = useState<Array<Tiers>>([])
 
-    type Devis = {
-        ref: string,
-        client: string,
-        date: string,
-        dureeValidité: string,
-        conditionReglement: string,
-        modeReglement: string,
-        dateLivraison: string
-    }
+    const handleDevisClient = async (event: React.ChangeEvent<HTMLInputElement>) => {
 
-    const handleDevisClient = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setdevisClient(event.target.value)
+        if(event.target.value.length >= 2)
+        {
+            let reponse : AxiosResponse = await axios.post('/api/tiers/search', {
+                search: event.target.value
+            })
+
+            setResSearch(reponse.data)
+        }
+        else
+        {
+            setResSearch([])
+        }
     }
 
     const handleDevisDate = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,8 +80,7 @@ function CreerDevis() {
 
     const creerDevis = async () => {
         let requete : Devis = {
-            ref: devisClient,
-            client: devisClient,
+            clientId: selectClientId,
             date: devisDate,
             dureeValidité: devisDureeValid,
             conditionReglement: devisConditionReg,
@@ -68,7 +96,22 @@ function CreerDevis() {
 
         document.location.href = "/EditDevis/"+reponse.data
     }
-    
+
+    const selectClient = (event: React.MouseEvent) => {
+
+        let id : string|null = event.currentTarget.getAttribute("value-id")
+
+        let nom : string|null = event.currentTarget.getAttribute("value-nom")
+
+        setSelectClientId(id)
+        setSelectClientNom(nom)
+        setIsSelected(true)
+    }
+
+    const handleCancelSelect = (event: React.MouseEvent) => {
+        setIsSelected(false)
+        setResSearch([])
+    }
 
     return (
         <div className="CreerDevis">
@@ -76,9 +119,28 @@ function CreerDevis() {
             <div className="creerDevis-data-form">
                 <h2 className="h2">Nouvelle proprosition commerciale : </h2>
                 <p>Ref : status brouillon</p>
-                <input type="text" ></input>
+
                 <p>Client</p>
-                <input type="text" onChange={handleDevisClient}></input>
+
+                    {isSelected === false ?
+                        (
+                            <div>
+                                <input type="text" onChange={handleDevisClient}></input>
+                                {resSearch.map(ligne =>
+                                    <div>
+                                        <p value-nom={ligne.nom} value-id={ligne._id} onClick={selectClient}>{ligne.nom}</p>
+                                    </div>
+                                    )
+                                }
+                            </div>
+                        )
+                        :
+                        (
+                            <div>
+                                <button onClick={handleCancelSelect}>Annuler la sélection</button>
+                            </div>
+                        )
+                    } 
 
                 <p>Date de Proposition</p>
                 <input type="date" onChange={handleDevisDate}></input>
