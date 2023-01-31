@@ -12,12 +12,11 @@ function Menu() {
             <h4><Link className="link" to="/accueil">Accueil</Link></h4>
             <h4><Link className="link" to="/tiers">Tiers</Link></h4>
             <h4><Link className="link" to="/commercial">Commercial</Link></h4>
+            <h4><Link className="link" to="/facture">Facture</Link></h4>
             <h4><Link className="link" to="/users">Liste </Link></h4>
-            {/* <h4><Link className="link" to="/logout">Se déconnecter</Link></h4> */}
             <h4 className="link">
                 <Dropdown isOpen={dropdownOpen} toggle={() => setDropdownOpen(!dropdownOpen)}>
                     <DropdownToggle caret>
-                        {/* <h4 className="link">Mon compte</h4> */}
                         <div className="menu-cadre-user">
                             {/* <img className="menu-cadre-user" alt="login-user" src={user}></img> */}
                         </div>

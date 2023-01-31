@@ -1,33 +1,28 @@
-import { type } from "@testing-library/user-event/dist/type";
 import axios, { AxiosResponse } from "axios";
-import { stringify } from "querystring";
 import React, { useState } from "react";
-import { idText } from "typescript";
 import MenuComm from "../../MenuComm/MenuComm";
 import './CreerDevis.css'
 
 type Devis = {
-    clientId: string | null,
+    clientid: string | null,
     date: string,
-    dureeValidité: string,
-    conditionReglement: string,
-    modeReglement: string,
-    dateLivraison: string
+    dureevalid: string,
+    conditionreg: string,
+    modereg: string,
+    datelivraison: string
 }
 
-type Tiers = {
+type tiers = {
     _id: string,
-    code: string,
     nom: string,
-    adresse: string,
-    adresse2: string,
-    codepostal: string,
+    code: string,
+    adresse :string,
     ville: string,
     pays: string,
     departement: string,
-    telephone:string,
-    email:string,
-    commercial: string
+    telephone: string,
+    email: string,
+    commercial: string,
 }
 
 function CreerDevis() {
@@ -37,10 +32,14 @@ function CreerDevis() {
     const [devisConditionReg, setdevisConditionReg] = useState<string>("")
     const [devisModReg, setdevisModReg] = useState<string>("")
     const [devisDateLivraison, setdevisDateLivraison] = useState<string>("")
-    const [selectClientNom, setSelectClientNom] = useState<string|null>("")
+
+    const [resSearch, setResSearch] = useState<Array<tiers>>([])
+
     const [selectClientId, setSelectClientId] = useState<string|null>("")
+    const [selectClientNom, setSelectClientNom] = useState<string|null>("")
+
     const [isSelected, setIsSelected] = useState<boolean>(false)
-    const [resSearch, setResSearch] = useState<Array<Tiers>>([])
+
 
     const handleDevisClient = async (event: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -51,11 +50,31 @@ function CreerDevis() {
             })
 
             setResSearch(reponse.data)
+
+            // console.log(reponse.data)
         }
         else
         {
             setResSearch([])
         }
+    }
+
+    const selectClient = (event: React.MouseEvent) => {
+
+        let id : string | null  = event.currentTarget.getAttribute("value-id")
+        let nom : string | null = event.currentTarget.getAttribute("value-nom")
+
+
+        setSelectClientNom(nom)
+        setSelectClientId(id)
+
+        setIsSelected(true)
+    }
+    
+    const cancelSelect = (event: React.MouseEvent) => {
+        setIsSelected(false)
+        setSelectClientNom("")
+        setResSearch([])
     }
 
     const handleDevisDate = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,39 +98,27 @@ function CreerDevis() {
     }
 
     const creerDevis = async () => {
+        setIsSelected(true)
+        
         let requete : Devis = {
-            clientId: selectClientId,
+            clientid: selectClientId,
             date: devisDate,
-            dureeValidité: devisDureeValid,
-            conditionReglement: devisConditionReg,
-            modeReglement: devisModReg,
-            dateLivraison: devisDateLivraison
+            dureevalid: devisDureeValid,
+            conditionreg: devisConditionReg,
+            modereg: devisModReg,
+            datelivraison: devisDateLivraison
         }
 
         let reponse : AxiosResponse = await axios.post("/api/devis/create", {
-            data: requete
+            data: requete,
         })
 
-        console.log(reponse)
+        console.log(selectClientId)
 
         document.location.href = "/EditDevis/"+reponse.data
     }
 
-    const selectClient = (event: React.MouseEvent) => {
 
-        let id : string|null = event.currentTarget.getAttribute("value-id")
-
-        let nom : string|null = event.currentTarget.getAttribute("value-nom")
-
-        setSelectClientId(id)
-        setSelectClientNom(nom)
-        setIsSelected(true)
-    }
-
-    const handleCancelSelect = (event: React.MouseEvent) => {
-        setIsSelected(false)
-        setResSearch([])
-    }
 
     return (
         <div className="CreerDevis">
@@ -122,25 +129,27 @@ function CreerDevis() {
 
                 <p>Client</p>
 
-                    {isSelected === false ?
-                        (
-                            <div>
-                                <input type="text" onChange={handleDevisClient}></input>
-                                {resSearch.map(ligne =>
-                                    <div>
-                                        <p value-nom={ligne.nom} value-id={ligne._id} onClick={selectClient}>{ligne.nom}</p>
+                {isSelected === false ?
+                    (
+                        <div>
+                            <input onChange={handleDevisClient} type="text"></input>
+                            {resSearch && 
+                                resSearch.map((ligne : tiers) =>
+                                    <div value-id={ligne._id} value-nom={ligne.nom} onClick={selectClient} key={ligne._id}>
+                                        <p value-id={ligne._id} value-nom={ligne.nom} onClick={selectClient}>{ligne.nom}</p>
                                     </div>
-                                    )
-                                }
-                            </div>
-                        )
-                        :
-                        (
-                            <div>
-                                <button onClick={handleCancelSelect}>Annuler la sélection</button>
-                            </div>
-                        )
-                    } 
+                                )
+                            }
+                        </div>
+                    )
+                    :
+                    (
+                        <div>
+                            <p>{selectClientNom}</p>
+                            <button onClick={cancelSelect}>Annuler la sélection</button>
+                        </div>
+                    )
+                } 
 
                 <p>Date de Proposition</p>
                 <input type="date" onChange={handleDevisDate}></input>

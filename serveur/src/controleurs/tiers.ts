@@ -1,11 +1,11 @@
 import express, { Request, Response ,Express, IRouter } from 'express'
 import tiersdb from '../modeles/tiersdb';
-import { ObjectID } from "bson";
+import { ObjectId } from "bson";
 
 const routeur: IRouter = express.Router()
 
 type tiers = {
-    _id: ObjectID,
+    _id: ObjectId,
     code: string,
     nom: string,
     prenom: string
@@ -22,20 +22,42 @@ type tiers = {
 }
 
 routeur.post('/creertiers', async(req:Request, res: Response) => {
-    // console.log("salut")
 
-    const { nom, prenom, adresse, adresse2, codepostal, ville, pays, departement, telephone, email, type, commercial } = req.body.data;
+    const { nom, prenom, code, adresse, adresse2, codepostal, ville, pays, departement, telephone, email, type, commercial} = req.body.data;
 
-    let tiers = await tiersdb.findOne({"tiers" : nom})
+    let alltiers : Array<tiers> = await tiersdb.find({}).toArray()
+
+    let nbtiers = alltiers.length
+
+    function getcode(nbtiers : number, data : Array<tiers>, codedepart: number)
+    {
+        if(nbtiers === 0)
+        {
+            let depart = codedepart
+            return depart
+        }
+        else
+        {
+            let depart = Number(data[nbtiers - 1].code) + 1 
+            return depart
+        }
+    }
+
+    let codedepart: number = 1000
+    let codeint : any = getcode(nbtiers,alltiers,codedepart)
+
+    let tiers = await tiersdb.findOne({"nom" : nom})
 
     if(tiers)
     {
         res.json("existe")
-    } else {
+    } 
+    else {
+
         tiersdb.insertOne({
             nom: nom.toLocaleLowerCase(),
             prenom: prenom,
-            // code: code,  
+            code: codeint,
             adresse: adresse,
             adresse2: adresse2,
             codepostal: codepostal,
@@ -46,18 +68,30 @@ routeur.post('/creertiers', async(req:Request, res: Response) => {
             email: email,
             type: type,
             commercial: commercial,
+        }, async(erreur : any, client: any) => {
+
+            let id = client.insertedId
+            let date = new Date().toLocaleDateString()
+            let jour = date.substr(0,2)
+            let mois = date.substr(3,2)
+
+            let codefinal = String("CU") + String(jour) + String(mois) + ("-") + String(codeint)
+
+            tiersdb.updateOne({"_id": new ObjectId(id)},{
+                $set : {code: codefinal}
+            })
+
+            let data : tiers = await tiersdb.findOne({"_id": new ObjectId(id)})
+
+            res.json('ok')
         });
     }
-    
-    res.json("ok")
 })
 
 routeur.get('/listetiers', async (req:Request, res: Response) => {
     let listeTiers : Array<tiers> = await tiersdb.find({}).toArray()
 
     res.json(listeTiers)
-
-    // console.log(listeTiers)
 })
 
 routeur.post('/search', async (req: Request, res: Response) => {
@@ -65,10 +99,15 @@ routeur.post('/search', async (req: Request, res: Response) => {
     let search : string = req.body.search
 
     let client = await tiersdb.find({"nom": {$regex: search.toLocaleLowerCase() + ".*"}}).toArray()
-
-    console.log(client)
-
     res.json(client)
+})
+
+routeur.post('/modifier', async (req: Request, res:Response) => {
+    let reponse = await tiersdb.findOne({
+        "_id" : new ObjectId(req.body.id)
+    })
+
+    res.json(reponse)
 })
 
 export default routeur

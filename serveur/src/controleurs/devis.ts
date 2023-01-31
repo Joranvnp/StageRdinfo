@@ -1,19 +1,17 @@
-import express, { IRouter, NextFunction, Request, response, Response,  } from "express";
 import React from "react";
+import express, { IRouter, NextFunction, Request, Response } from "express";
 import pdfkit from "pdfkit"
-import doc from "pdfkit";
 import fs from "fs"
-import { width } from "pdfkit/js/page";
 import devisdb from "../modeles/devisdb";
-import { type } from "os";
-import { ObjectID } from "bson";
+import { ObjectId } from "bson";
+import tiersdb from "../modeles/tiersdb";
 // import blobStream from "blob-stream"
 // import Iframe from 'react-iframe'
 
 const routeur: IRouter = express.Router()
 
 type devis = {
-    _id: ObjectID,
+    _id: ObjectId,
     ref: string,
     status: string,
     client: string,
@@ -24,11 +22,29 @@ type devis = {
     dateLivraison: string
 }
 
+type tiers = {
+    _id: ObjectId,
+    code: string,
+    nom: string,
+    prenom: string
+    adresse: string,
+    adresse2: string,
+    codepostal: string,
+    ville: string,
+    pays: string,
+    departement: string,
+    telephone:string,
+    email:string,
+    type: string,
+    commercial: string
+}
 routeur.post("/create", async(req: Request, res: Response) => {
 
-    const { client, date, dureeValid, conditionReg, modeReglement, dateLivraison} = req.body.data
+    const { clientid, date, dureevalid, conditionreg, modereglement, datelivraison} = req.body.data
 
     let listeDevis : Array<devis> = await devisdb.find({}).toArray()
+
+    let infosClient: tiers = await tiersdb.findOne({"_id": new ObjectId(clientid)})
 
     let nbdevis : number = Number(listeDevis.length) + Number(1)
 
@@ -36,22 +52,18 @@ routeur.post("/create", async(req: Request, res: Response) => {
 
     let codeFinal = "PROV"+code
 
-    console.log(response)
-    console.log(listeDevis.length)
+    console.log(infosClient)
 
     let resultat = await devisdb.insertOne({
         code : codeFinal,
         status: "brouillon",
-        client: client,
+        client: infosClient,
         date: date,
-        dureeValid: dureeValid, 
-        conditionReg: conditionReg, 
-        modeReglement: modeReglement,
-        dateLivraison: dateLivraison
+        dureevalid: dureevalid, 
+        conditionreg: conditionreg, 
+        modereglement: modereglement,
+        datelivraison: datelivraison
     })
-
-    console.log(resultat)
-    console.log("salut")
 
     res.json(resultat.insertedId)
 })
@@ -60,12 +72,30 @@ routeur.get("/liste", async(req:Request, res: Response) => {
     let listeDevis : Array<devis> = await devisdb.find({}).toArray()
 
     res.json(listeDevis)
+})
 
-    console.log(listeDevis)
+routeur.post("/listebyid", async(req:Request, res:Response) => {
+
+    let infosDevisById = await devisdb.findOne({
+        "_id": new ObjectId(req.body.id),
+    })
+
+    res.json(infosDevisById)
+
+    
+})
+
+routeur.post("/modifier", async(req:Request, res: Response) => {
+    const { id } = req.body.data
+
+    let reponse = await devisdb.find({
+        "_id" : new ObjectId(id),
+    })
+
+    res.json(reponse)
 })
 
 routeur.post("/genpdf", async(req: Request, res: Response, next: NextFunction) => {
-    console.log("salut")
 
     const doc: any = new pdfkit()
 

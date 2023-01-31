@@ -46,13 +46,11 @@ passport.serializeUser((user: any, done: any) => {
         date: new Date()
     }
 
-    // console.log(userInfos)
     done(null, userInfos)
 })
 
 passport.deserializeUser(async (userInfos: any, done: any) => {
     
-    console.log(new ObjectID(userInfos.id))
     let userdata = await usersdb.findOne({ "_id": new ObjectId(userInfos.id)})
 
     if (userdata) {
@@ -70,10 +68,6 @@ passport.deserializeUser(async (userInfos: any, done: any) => {
         done("Utilisateur non trouvé", null)
     }
     
-
-    // console.log(userdata)
-
-
 })
 
 export default passport

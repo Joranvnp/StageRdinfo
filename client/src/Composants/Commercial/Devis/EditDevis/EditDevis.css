@@ -5,10 +5,15 @@
 
 }
 
-.editDevis-data-form {
+.editdevis-data-entete {
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+.editdevis-data-form {
     flex-direction: column;
 }
 
-.editDevis-data-submit {
-    flex-direction: column;
+.editdevis-data-submit {
+    /* flex-direction: column; */
 }

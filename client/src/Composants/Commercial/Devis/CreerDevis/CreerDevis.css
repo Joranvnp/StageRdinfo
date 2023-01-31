@@ -1,6 +1,5 @@
-body {
-    font-family: 'Open Sans', sans-serif;
-}
+/*
+
 
 .CreerDevis {
     display: flex;
@@ -15,8 +14,8 @@ body {
 }
 
 .creerDevis-data-submit {
-    /* position: absolute; */
-    /* display: flex; */
+    /* position: absolute; 
+    /* display: flex; 
     align-items: center;
     border: 1px solid grey;
     
@@ -24,8 +23,83 @@ body {
 
 /* .h2 {
 
-} */
+} 
 
 .center {
     align-items: center;
+}
+
+*/
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.CreerDevis {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.creerDevis-data-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.h2 {
+    text-align: center;
+}
+
+/* input,
+select {
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+} */
+
+.cancel-select {
+    background-color: #f44336;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cancel-select:hover {
+    background-color: #ba0d0d;
+}
+
+.select-client-nom {
+    margin: 8px 0;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.select-client-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.select-client-result-nom {
+    margin: 8px 0;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.select-client-result-nom:hover {
+    background-color: #f2f2f2;
 }

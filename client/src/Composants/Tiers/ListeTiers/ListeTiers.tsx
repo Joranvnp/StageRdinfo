@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import MenuTiers from "../MenuTiers/MenuTiers";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import "./ListeTiers.css"
+import { Link } from "react-router-dom";
 
 type Tiers = {
     _id: string,
@@ -24,11 +25,48 @@ function ListeTiers() {
 
     const [tiersList, setTiersList] = useState<Array<Tiers>>([])
 
+    const [selectTiersNom, setSelectTiersNom] = useState<string|null>("")
+    const [selectTiersId, setSelectedTiersId] = useState<string|null>("")
+    const [resSearch, setResSearch] = useState<Array<Tiers>>([])
+    const [isSelected, setIsSelected] = useState<boolean>(false)
+
     useEffect(() => {
         axios.get("/api/tiers/listetiers").then(reponse => {
             setTiersList(reponse.data)
         })
     }, [])
+
+    const handleTiersNom = async (event: React.ChangeEvent<HTMLInputElement>) => {
+
+        if(event.target.value.length >= 2)
+        {
+            let reponse : AxiosResponse = await axios.post("/api/tiers/search", {
+                search: event.target.value
+            })
+    
+            setResSearch(reponse.data)
+        } 
+        else
+        {
+            setResSearch([])
+        }
+    }
+
+    const selectTiers = (event: React.MouseEvent) => {
+        let id : string|null = event.currentTarget.getAttribute("value-id")
+
+        let nom: string|null = event.currentTarget.getAttribute("value-nom")
+
+        setSelectedTiersId(id)
+        setSelectTiersNom(nom)
+        setIsSelected(true)
+    }
+
+    const cancelSelect = (event: React.MouseEvent) => {
+        setIsSelected(false)
+        setSelectTiersNom("")
+        setResSearch([])
+    }
 
     return (
         <div className="ListeTiers">
@@ -36,9 +74,31 @@ function ListeTiers() {
             <div className="listetiers-panel">
                 <h1>Liste tiers</h1>
                 <div className="listetierssearch">
-                    {/* <h4>Recherche de Tiers</h4>
-                    <input type="text" placeholder="Nom"/>
-                    <input type="text" placeholder="Prenom"/>
+                    <h4>Recherche de Tiers</h4>
+
+                    {isSelected === false ?
+
+                        (
+                            <div>
+                                <input type="text" onChange={handleTiersNom} placeholder="Recherche le nom"/>
+                                {resSearch.map(tiers => 
+                                    <div>
+                                        <p value-id={tiers._id} value-nom={tiers.nom} onClick={selectTiers}>{tiers.nom}</p>
+                                    </div>
+                                )}
+                            </div>
+                        )
+                        :
+                        (
+                            <div>
+                                <p>{selectTiersNom}</p>
+                                <button onClick={cancelSelect}>Annuler la sélection</button>
+                            </div>
+                        )
+
+                    }
+
+                    {/* <input type="text" placeholder="Prenom"/>
                     <input type="text" placeholder="Adresse"/>
                     <input type="text" placeholder="Seconde adresse"/>
                     <input type="text" placeholder="Code postal"/>
@@ -58,12 +118,12 @@ function ListeTiers() {
                         <tr>
                             <th>Nom</th>
                             <th>Prenom</th>
+                            <th>Code</th>
                             <th>Adresse</th>
                             <th>Seconde adresse</th>
                             <th>Code Postal</th>
                             <th>Ville</th>
                             <th>Pays</th>
-                            <th>Departement</th>
                             <th>Telephone</th>
                             <th>Email</th>
                             <th>Type</th>
@@ -74,15 +134,18 @@ function ListeTiers() {
                             <tr key={tiers._id}>
                                 <td>{tiers.nom}</td>
                                 <td>{tiers.prenom}</td>
+                                <td>{tiers.code}</td>
                                 <td>{tiers.adresse}</td>
                                 <td>{tiers.adresse2}</td>
                                 <td>{tiers.codepostal}</td>
                                 <td>{tiers.ville}</td>
                                 <td>{tiers.pays}</td>
-                                <td>{tiers.departement}</td>
                                 <td>{tiers.telephone}</td>
                                 <td>{tiers.email}</td>
                                 <td>{tiers.type}</td>
+                                <div>
+                                    <Link to={'/tiers/edit/'+tiers._id} value-id={tiers._id}><button>Modifier</button></Link>
+                                </div>
                             </tr>
                         )}
                     </tbody>

@@ -47,6 +47,8 @@ app.use("/api/devis", devis)
 import tiers from "./controleurs/tiers"
 app.use("/api/tiers", tiers)
 
+import facture from "./controleurs/facture"
+app.use("/api/facture", facture)
 
 //Mise en place du dossier Statique
 app.use(express.static(path.join(__dirname, '../../client/build')));

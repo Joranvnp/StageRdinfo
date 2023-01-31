@@ -8,8 +8,6 @@ const routeur: IRouter = express.Router()
 routeur.post('/create', async (req: Request, res: Response) => {
     const { nom, prenom, email, login, password } = req.body.data
 
-    console.log(nom)
-
     let saltCount : number = 10
 
     let salt : string = await bcrypt.genSaltSync(saltCount)
@@ -51,7 +49,6 @@ routeur.post('/deletebyid', async (req: Request, res: Response) => {
 })
 
 routeur.get('/info', async (req: Request, res: Response) => {
-    // console.log(req.user)
     res.json(req.user)
 })
 
