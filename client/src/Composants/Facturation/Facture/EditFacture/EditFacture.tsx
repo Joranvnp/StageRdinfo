@@ -1,29 +1,29 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import MenuFac from "../../MenuFac/MenuFac";
 import './EditFacture.css'
-
-type Facture = {
-    id: any,
-    client: string,
-    type: string
-};
+import { RootState } from "../../../Redux/store";
+import { facture } from "../../../Redux/Reducers/facture";
 
 function EditFacture() {
     const { id } = useParams();
     const [clientFacture, setClientFacture] = useState<string>("");
     const [typeFacture, setTypeFacture] = useState<string>("");
 
+    const factures : Array<any> = useSelector((state : RootState) => state.facture.data)
+
     useEffect(() => {
-        axios.post("/api/facture/editbyid", {
-            data: { id }
-        })
-        .then(response => {
-            setClientFacture(response.data.client);
-            setTypeFacture(response.data.type);
-        });
-    }, [id]);
+
+        if (factures)
+        {
+            const factureUnique = factures.find(factureU => factureU._id === id)
+            setClientFacture(factureUnique.client)
+            setTypeFacture(factureUnique.type)
+        }
+
+    }, [factures]);
 
     const handleClientChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setClientFacture(event.target.value);
@@ -34,14 +34,14 @@ function EditFacture() {
     };
 
     const modifyData = () => {
-        let requete : Facture = {
-            id: id,
-            client: clientFacture,
-            type: typeFacture
-        }
-        axios.post("/api/facture/updatefacture", {
-            data: requete
-        });
+        // let requete : facture = {
+        //     id: id,
+        //     client: clientFacture,
+        //     type: typeFacture
+        // }
+        // axios.post("/api/facture/updatefacture", {
+        //     data: requete
+        // });
     };
 
     return (

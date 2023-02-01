@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import MenuFac from "../../MenuFac/MenuFac";
 import './ListeFacture.css'
+import { useSelector } from "react-redux";
+import { RootState } from "../../../Redux/store";
 
-type Facture = {
+type facture = {
     _id: string,
     client: string,
     type: string
@@ -13,14 +15,17 @@ type Facture = {
 function ListeFacture()
 {
 
-    const [listeFactures, setListeFactures] = useState<Array<Facture>>([])
+    const [listeFactures, setListeFactures] = useState<Array<facture>>([])
+
+    const factures : Array<facture> = useSelector((state : RootState) => state.facture.data)
 
     useEffect(()=> {
-        axios.get("/api/facture/list").then(reponse => {
-            setListeFactures(reponse.data)
-        })
+        
+
 
     }, [])
+
+    console.log(factures)
 
     return (
         <div className="ListeFacture">
@@ -36,7 +41,7 @@ function ListeFacture()
                         </tr>
                     </thead>
                     <tbody className="listefacture-tab-body">
-                        {listeFactures.map(facture =>
+                        {factures.map(facture =>
                             <tr>
                                 <td>{facture.client}</td>
                                 <td>{facture.type}</td>

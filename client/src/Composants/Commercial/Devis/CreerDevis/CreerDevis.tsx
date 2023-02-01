@@ -50,8 +50,6 @@ function CreerDevis() {
             })
 
             setResSearch(reponse.data)
-
-            // console.log(reponse.data)
         }
         else
         {
@@ -115,7 +113,7 @@ function CreerDevis() {
 
         console.log(selectClientId)
 
-        document.location.href = "/EditDevis/"+reponse.data
+        document.location.href = "/devis/edit/"+reponse.data
     }
 
 

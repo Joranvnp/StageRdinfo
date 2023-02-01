@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import axios, { AxiosResponse } from "axios";
 import './Users.css';
 import { userContext } from "../Contexte/Contexte";
+import { useSelector } from "react-redux";
+import { RootState } from "../Redux/store";
 
 type Users = {
     _id: number,
@@ -47,6 +49,9 @@ function Users() {
             document.location.href = "/users"
         }
     }
+
+    const tiers = useSelector((state : RootState) => state.tiers.data)
+    console.log(tiers)
 
     return (
         <div className="Users">

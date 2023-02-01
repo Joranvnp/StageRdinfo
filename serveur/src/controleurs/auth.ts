@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import usersdb from '../modeles/userdb';
 import passport from "passport";
 import { Strategy as localStrategy } from 'passport-local';
-import { ObjectID, ObjectId } from "bson";
+import { ObjectId } from "bson";
 
 type userobject = {
     _id: string,

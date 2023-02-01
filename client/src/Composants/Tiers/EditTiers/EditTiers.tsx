@@ -21,7 +21,6 @@ function EditTiers()
         <div className="EditTiers">
             <MenuTiers></MenuTiers>
             <h1>Edit Tiers : </h1>
-            
         </div>
     )
 }

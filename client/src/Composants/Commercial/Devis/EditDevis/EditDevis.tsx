@@ -3,6 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MenuComm from "../../MenuComm/MenuComm";
 import './EditDevis.css'
+import { useSelector} from "react-redux"
+import { RootState } from "../../../Redux/store";
+import logo from "../../../../Images/logoweb.png"
+import edit from "../../../../Images/logoweb.png"
+import Corps from "../../../Corps/Corps";
+import CorpsFuncButton from "../../../Corps/CorpsFuncButton/CorpsFuncButton";
+import CorpsLigneAdd from "../../../Corps/CorpsLigneAdd/CorpsLigneAdd";
 
 type tiers = {
     _id: string,
@@ -23,9 +30,10 @@ type tiers = {
 
 function EditDevis() 
 {
-
     const { id } = useParams()
-    const [infosDevis, setInfosDevis] = useState<Array<string>>([])
+
+    const devis = useSelector((state: RootState) => state.devis.data)
+
     const [devisClient, setDevisClient] = useState<tiers>()
     const [devisStatus, setDevisStatus] = useState<string>("")
     const [devisDate, setdevisDate] = useState<string>("")
@@ -34,62 +42,88 @@ function EditDevis()
     const [devisModReg, setdevisModReg] = useState<string>("")
     const [devisDateLivraison, setdevisDateLivraison] = useState<string>("")
 
+    const devisunique = devis.find((deviu: any) => deviu._id == id)
     useEffect(() => {
-
-        axios.post("/api/devis/listebyid",{
-            id : id,
-        }).then(reponse => {
-            // setInfosDevis(reponse.data)
-            setDevisClient(reponse.data.client)
-            setdevisDate(reponse.data.date)
-            setdevisDureeValid(reponse.data.dureeValid)
-            setdevisConditionReg(reponse.data.conditionReg)
-            setdevisModReg(reponse.data.modeReglement)
-            setdevisDateLivraison(reponse.data.dateLivraison)
-        })
-
-    }, [id])
+        if (devisunique)
+        {
+            setDevisClient(devisunique.client)
+            setdevisDate(devisunique.date)
+            setdevisDureeValid(devisunique.dureeValid)
+            setdevisConditionReg(devisunique.conditionReg)
+            setdevisModReg(devisunique.modeReglement)
+            setdevisDateLivraison(devisunique.dateLivraison)
+        }
+            
+    }, [devisunique])
 
     return (
         <div className="EditDevis">
             <MenuComm></MenuComm>
-            <div className="editDevis-data-form">
-                <h1>Fiche Proposition</h1>
-                <div className="editdevis-data-entete">
-                    {devisClient &&
-                        <div>
-                            <p>Id : {id}</p>
-                            <p>Type de client : {devisClient.type}</p>
-                            <p>Nom : {devisClient.nom}</p>
-                            <p>Adresse : {devisClient.adresse + " Code postal : "+ devisClient.codepostal + " Ville : " + devisClient.ville}</p>
-                        </div>
-                    }
-                    {/* Afficher les informations propre au devis sélectionner */}
-
+            <div className="editdevis-data">
+                <div className="editdevis-barre">
+                    <p>Fiche Proposition</p>
                 </div>
-                <div className="editdevis-data-form">
-                    {/* Afficher un formulaire pour modifier le devis et le poster avec une requete post */}
-                    {/* {infosDevis.map(devis => 
-                            <div key={devis.id}>
-                                <td>{devis.code}</td>
-                                <p>Date du devis : <input type="date" value={devis.date}></input></p>
+                <hr className="editdevis-titre-limite"></hr>
+                <div className="editdevis-titre">
+                    <div className="editdevis-titre-gauche">
+                        <img alt="devis-edit" src={edit}></img>
+                    </div>
+                    <div className="editdevis-titre-droite">
+                        {/* Afficher les informations propre au devis sélectionner */}
+                        {devisClient &&
+                            <div>
+                                <p>Id : {id}</p>
+                                <p>Type de client : {devisClient.type}</p>
+                                <p>Nom : {devisClient.nom}</p>
+                                <p>Adresse : {devisClient.adresse + " Code postal : "+ devisClient.codepostal + " Ville : " + devisClient.ville}</p>
                             </div>
-                    )} */}
-                    {/* {devisClient &&
-                        <div>
-                            <p>Date du devis : <input type="date" value={devisDate}></input></p>
-                            <p>Date de Proposition : <input type="date" value={devisDate}></input></p>
-                            <p>Durée de validité : <input type="text" value={devisModReg}></input></p>
-                            <p>Condition de Reglement : <input type="text" value={devisConditionReg}></input></p>
-                        </div>
-                    } */}
-
+                        }
+                        <img src={logo}></img>
+                    </div>
                 </div>
-                <div className="editdevis-data-submit">
 
+                <hr className="editdevis-infos-limite"></hr>
+
+                <div className="editdevis-infos">
+                        {devisunique &&
+                            <div className="editdevis-infos-gauche">
+                                <div className="editdevis-infos-gauche-ligne">
+                                    <p>Date du devis : <input type="date" value={devisunique.date}></input></p>
+                                </div>
+                                <div className="editdevis-infos-gauche-ligne">
+                                    <p>Durée de validité : <input type="date" value={devisunique.dureeValid}></input></p>
+                                </div>
+                                <div className="editdevis-infos-gauche-ligne">
+                                    <p>Date de Proposition : <input type="date" value={devisunique.dateLivraison}></input></p>
+                                </div>
+                                <div className="editdevis-infos-gauche-ligne">
+                                    <p> Conditions de Reglement : </p>
+                                    <select value={devisConditionReg}>
+                                        <option value="reception">A réception</option>
+                                        <option value="30 jours"> 30 jours </option>
+                                        <option value="a livraison"> A livraison </option>
+                                    </select>
+                                </div>
+                                <div className="editdevis-infos-gauche-ligne">
+                                    <p> Mode de Reglement : </p>
+                                    <select value={devisModReg}>
+                                        <option value="virement"> Virement </option>
+                                        <option value="cheque"> Cheque </option>
+                                        <option value="especes"> Especes </option>
+                                        <option value="prelevement"> Prelevement </option>
+                                    </select>
+                                </div>
+                            </div>
+                        }
+                    <div className="editdevis-infos-droite">
+
+                    </div>  
                 </div>
+                {/* <div className="editdevis-data-submit">
+                    <button>Editer le devis</button>
+                </div> */}
+                <Corps id={id}></Corps>
             </div>
-            
         </div>
     )
 }

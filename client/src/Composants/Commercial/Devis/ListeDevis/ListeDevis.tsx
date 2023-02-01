@@ -4,6 +4,8 @@ import './ListeDevis.css'
 import axios, { AxiosResponse } from "axios";
 import Devis from "../Devis";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../Redux/store";
 
 type tiers = {
     _id: string,
@@ -36,19 +38,22 @@ type Devis = {
 
 function ListeDevis() {
 
-    const [devisList, setDevisList] = useState<Array<Devis>>([])
+    // const [devisList, setDevisList] = useState<Array<Devis>>([])
 
-    useEffect(() => {
-        axios.get("/api/devis/liste").then(reponse => {
-            setDevisList(reponse.data)
-        })
-    }, [])
+    // useEffect(() => {
+    //     axios.get("/api/devis/liste").then(reponse => {
+    //         setDevisList(reponse.data)
+    //     })
+    // }, [])
 
     const goEdit = (event: React.MouseEvent) => {
         let id : string | null = event.currentTarget.getAttribute("data-value")
 
         document.location.href = "/devis/edit/"+id
     }
+
+    const devis : Array<Devis> = useSelector((state : RootState) => state.devis.data)
+    console.log(devis)
 
     return (
         <div className="ListeDevis">
@@ -65,7 +70,7 @@ function ListeDevis() {
                     <p> Mode de Réglement </p>
                     <p> Etat </p>
                 </div>
-                {devisList.map(devis =>
+                {devis.map(devis =>
                     <div className="listedevis-data-ligne" key={devis._id}>
                         <p className="listedevis-data-ligne-link" data-value={devis._id} onClick={goEdit}> {devis.code} </p>
                         <p> {devis.client.nom} </p>

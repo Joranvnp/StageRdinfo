@@ -3,6 +3,8 @@ import MenuTiers from "../MenuTiers/MenuTiers";
 import axios, { AxiosResponse } from "axios";
 import "./ListeTiers.css"
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Redux/store";
 
 type Tiers = {
     _id: string,
@@ -67,6 +69,9 @@ function ListeTiers() {
         setSelectTiersNom("")
         setResSearch([])
     }
+
+    const users = useSelector((state : RootState) => state.users.data)
+    console.log(users)
 
     return (
         <div className="ListeTiers">

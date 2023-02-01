@@ -13,7 +13,7 @@ function Menu() {
             <h4><Link className="link" to="/tiers">Tiers</Link></h4>
             <h4><Link className="link" to="/commercial">Commercial</Link></h4>
             <h4><Link className="link" to="/facture">Facture</Link></h4>
-            <h4><Link className="link" to="/users">Liste </Link></h4>
+            {/* <h4><Link className="link" to="/users">Liste </Link></h4> */}
             <h4 className="link">
                 <Dropdown isOpen={dropdownOpen} toggle={() => setDropdownOpen(!dropdownOpen)}>
                     <DropdownToggle caret>
