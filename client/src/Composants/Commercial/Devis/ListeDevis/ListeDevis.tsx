@@ -27,7 +27,7 @@ type tiers = {
 type Devis = {
     _id: string,
     code: string,
-    statut: string,
+    status: string,
     client: tiers,
     date: string,
     dureevalid: string,
@@ -53,7 +53,7 @@ function ListeDevis() {
     }
 
     const devis : Array<Devis> = useSelector((state : RootState) => state.devis.data)
-    console.log(devis)
+    // console.log(devis)
 
     return (
         <div className="ListeDevis">
@@ -77,9 +77,10 @@ function ListeDevis() {
                         <p> {new Date(devis.date).toLocaleDateString()} </p>
                         <p> {devis.dureevalid} </p>
                         <p> {devis.modereglement} </p>
-                        <p> {devis.statut} </p>
+                        <p> {devis.status} </p>
                     </div>
                 )}
+                
             </div>
         </div>
     )

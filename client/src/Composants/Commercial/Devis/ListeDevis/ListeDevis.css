@@ -9,6 +9,8 @@
     flex-direction: column;
     margin-left: 2%;
     margin-right: 2%;
+    width: 100%;
+    height: 100%;
 }
 
 .listedevis-data-entete
@@ -16,7 +18,6 @@
     display:grid;
     background-color: whitesmoke;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto;
 }
 
 .listedevis-data-ligne

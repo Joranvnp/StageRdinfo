@@ -52,7 +52,7 @@ function CreerFacture()
             document.location.href = "/facture/edit/"+reponse.data.id
         }   
 
-        console.log(requete)
+        // console.log(requete)
     }
 
     return (

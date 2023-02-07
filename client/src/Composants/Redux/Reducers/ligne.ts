@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { Action } from "@remix-run/router";
 import axios, { AxiosResponse } from "axios";
 import { useState } from "react";
 
@@ -45,8 +46,16 @@ const initialState :any = {
 // const [totalht, setTotalht] = useState<number>()
 
 
-export const getLigne: any = createAsyncThunk("/api/ligne/liste", async () => {
-    let reponse : AxiosResponse = await axios.get('/api/ligne/liste')
+// export const getLigne: any = createAsyncThunk("/api/ligne/liste", async () => {
+//     let reponse : AxiosResponse = await axios.get('/api/ligne/liste')
+
+//     return reponse.data
+// })
+
+export const getLigne: any = createAsyncThunk("/api/ligne/listebyid", async (id) => {
+    let reponse : AxiosResponse = await axios.post('/api/ligne/listebyid', {
+        data : id
+    })
 
     return reponse.data
 })
@@ -57,10 +66,24 @@ export const addLigne: any = createAsyncThunk("/api/ligne/ajout", async (data) =
         data: data
     })
 
-    console.log(reponse.data)
-
     return reponse.data
     
+})
+
+export const delLigne: any = createAsyncThunk("/api/ligne/supprimerbyid", async (data) => {
+    let reponse : AxiosResponse = await axios.post("/api/ligne/supprimerbyid", {
+        data: data
+    })
+
+    return reponse.data
+})
+
+export const modLigne: any = createAsyncThunk("/api/ligne/modifierbyid", async (data) => {
+    let reponse : AxiosResponse = await axios.post("/api/ligne/modifierbyid", {
+        data: data
+    })
+
+    return reponse.data
 })
 
 export const ligne = createSlice ({
@@ -72,6 +95,12 @@ export const ligne = createSlice ({
             state.data = action.payload
         },
         [addLigne.fulfilled]: (state, action: PayloadAction<Array<Ligne>>) => {
+            state.data = action.payload
+        },
+        [delLigne.fulfilled]: (state, action: PayloadAction<Array<Ligne>>) => {
+            state.data = action.payload
+        },
+        [modLigne.fulfilled]: (state, action: PayloadAction<Array<Ligne>>) => {
             state.data = action.payload
         }
     }

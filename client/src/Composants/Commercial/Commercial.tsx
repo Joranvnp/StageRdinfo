@@ -10,7 +10,7 @@ function Commercial() {
             data: Response
         })
 
-        console.log(reponse.data)
+        // console.log(reponse.data)
     }
 
     const displayPdf = () => {

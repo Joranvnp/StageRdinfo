@@ -4,11 +4,12 @@ import MenuComm from "../../MenuComm/MenuComm";
 import './CreerDevis.css'
 
 type Devis = {
+    status: string,
     clientid: string | null,
     date: string,
     dureevalid: string,
     conditionreg: string,
-    modereg: string,
+    modereglement: string,
     datelivraison: string
 }
 
@@ -32,6 +33,7 @@ function CreerDevis() {
     const [devisConditionReg, setdevisConditionReg] = useState<string>("")
     const [devisModReg, setdevisModReg] = useState<string>("")
     const [devisDateLivraison, setdevisDateLivraison] = useState<string>("")
+    const [devisStatus, setDevisStatus] = useState<string>("")
 
     const [resSearch, setResSearch] = useState<Array<tiers>>([])
 
@@ -97,21 +99,23 @@ function CreerDevis() {
 
     const creerDevis = async () => {
         setIsSelected(true)
+        setDevisStatus("brouillon")
         
         let requete : Devis = {
             clientid: selectClientId,
             date: devisDate,
             dureevalid: devisDureeValid,
             conditionreg: devisConditionReg,
-            modereg: devisModReg,
-            datelivraison: devisDateLivraison
+            modereglement: devisModReg,
+            datelivraison: devisDateLivraison,
+            status: devisStatus
         }
 
         let reponse : AxiosResponse = await axios.post("/api/devis/create", {
             data: requete,
         })
 
-        console.log(selectClientId)
+        // console.log(selectClientId)
 
         document.location.href = "/devis/edit/"+reponse.data
     }
@@ -122,8 +126,8 @@ function CreerDevis() {
         <div className="CreerDevis">
             <MenuComm></MenuComm>
             <div className="creerDevis-data-form">
-                <h2 className="h2">Nouvelle proprosition commerciale : </h2>
-                <p>Ref : status brouillon</p>
+                <h2 className="h2">Nouveau devis</h2>
+                <p>Status : brouillon</p>
 
                 <p>Client</p>
 
@@ -161,7 +165,7 @@ function CreerDevis() {
                     <option value="A réception">A réception</option>
                 </select>
 
-                <p>Règlement</p>
+                <p>Mode de Règlement</p>
                 <select onChange={handleDevisModReg}>
                     <option>Choisir</option> 
                     <option value="Cheque">Cheque</option>

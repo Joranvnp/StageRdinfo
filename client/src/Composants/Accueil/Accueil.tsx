@@ -7,7 +7,7 @@ function Accueil() {
 
     const userData = useContext(userContext)
 
-    console.log(userData)
+    // console.log(userData)
     return (
         <div className="Accueil">
             <h1>Infos : </h1>

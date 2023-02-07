@@ -16,10 +16,14 @@ type ligne = {
     cat: string,
     type: string
 }
-routeur.get('/liste', async(req: Request, res: Response) => {
-    let listeLigne : Array<ligne> = await lignedb.find({}).toArray()
 
-    res.json(listeLigne)
+routeur.post('/listebyid', async(req:Request, res:Response) => {
+
+    let reponse : any = await lignedb.find({
+        element : req.body.data,
+    }).toArray()
+
+    res.json(reponse)
 })
 
 routeur.post('/ajout', async(req: Request, res: Response) => {
@@ -39,13 +43,46 @@ routeur.post('/ajout', async(req: Request, res: Response) => {
             type: type
         })        
 
-        let lignes : Array<ligne> = await lignedb.find({}).toArray()
+        let lignes : Array<ligne> = await lignedb.find({"element": element}).toArray()
 
         res.json(lignes)
-
-        console.log(lignes)
     }
 
+})
+
+routeur.post('/supprimerbyid', async(req:Request, res:Response) => {
+    const { id, element } = req.body.data
+
+    await lignedb.deleteOne({"_id" : new ObjectId(id)})
+
+    let lignes : Array<ligne> = await lignedb.find({"element": element}).toArray()
+
+    res.json(lignes)
+})
+
+routeur.post('/modifierbyid', async(req:Request, res:Response) => {
+    const { id, element, desc, tva, pu, qte, remise, pr, cat, type } = req.body.data
+
+    let reponse = await lignedb.updateOne({
+        "_id" : new ObjectId(id)
+    }, {
+        $set:{
+            desc: desc,
+            tva: tva,
+            pu: pu,
+            qte: qte,
+            remise: remise,
+            pr: pr,
+            cat: cat,
+            type: type
+        }
+    })
+
+    console.log(id)
+
+    let lignes : Array<ligne> = await lignedb.find({"element": element}).toArray()
+
+    res.json(lignes)
 })
 
 export default routeur

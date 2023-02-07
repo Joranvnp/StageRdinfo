@@ -5,6 +5,7 @@ import "./ListeTiers.css"
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/store";
+import user from "../../Redux/Reducers/user";
 
 type Tiers = {
     _id: string,
@@ -73,6 +74,27 @@ function ListeTiers() {
     const users = useSelector((state : RootState) => state.users.data)
     console.log(users)
 
+    const modifyTiers = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        const { value } = event.target as HTMLButtonElement
+
+
+    }
+
+    const deleteTiers = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        // const { value } = event.currentTarget 
+        // const { value } = event.currentTarget.getAttribute("value")
+        let value : string | null = event.currentTarget.getAttribute("value")
+
+        let reponse = await axios.post('/api/tiers/supprimer', {
+            id: value
+        })
+
+        if(reponse.data)
+        {
+            document.location.href = "/listetiers"
+        }
+    }
+
     return (
         <div className="ListeTiers">
             <MenuTiers></MenuTiers>
@@ -132,6 +154,7 @@ function ListeTiers() {
                             <th>Telephone</th>
                             <th>Email</th>
                             <th>Type</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody className="listetiers-tab-body">
@@ -148,9 +171,14 @@ function ListeTiers() {
                                 <td>{tiers.telephone}</td>
                                 <td>{tiers.email}</td>
                                 <td>{tiers.type}</td>
-                                <div>
-                                    <Link to={'/tiers/edit/'+tiers._id} value-id={tiers._id}><button>Modifier</button></Link>
-                                </div>
+                                <td>
+                                    <div>
+                                        <Link to={'/tiers/modifier/'+tiers._id} value-id={tiers._id}><button onClick={deleteTiers}>Modifier</button></Link>
+                                        <br />
+                                        {/* <Link to={'/tiers/supprimer/'+tiers._id} value-id={tiers._id}><button value-id={tiers._id} onClick={modifyTiers}>Supprimer</button></Link> */}
+                                        <button value={tiers._id} onClick={deleteTiers}>Supprimer</button>
+                                    </div>
+                                </td>
                             </tr>
                         )}
                     </tbody>

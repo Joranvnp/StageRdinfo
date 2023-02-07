@@ -221,10 +221,7 @@ function CreerTiers() {
                             </div>
                         )
                         : null
-
                     }
-
-
                     
                 </div>
                 

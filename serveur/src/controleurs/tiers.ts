@@ -38,15 +38,16 @@ routeur.post('/creertiers', async(req:Request, res: Response) => {
         }
         else
         {
-            let depart = Number(data[nbtiers - 1].code) + 1 
+            let depart = Number(data[nbtiers - 1].code.split("-")[1]) + 1 
             return depart
         }
     }
 
     let codedepart: number = 1000
     let codeint : any = getcode(nbtiers,alltiers,codedepart)
+    codeint = Number(codeint)
 
-    let tiers = await tiersdb.findOne({"nom" : nom})
+    let tiers = await tiersdb.findOne({"nom" : nom.toLocaleLowerCase()})
 
     if(tiers)
     {
@@ -57,7 +58,6 @@ routeur.post('/creertiers', async(req:Request, res: Response) => {
         tiersdb.insertOne({
             nom: nom.toLocaleLowerCase(),
             prenom: prenom,
-            code: codeint,
             adresse: adresse,
             adresse2: adresse2,
             codepostal: codepostal,
@@ -75,7 +75,7 @@ routeur.post('/creertiers', async(req:Request, res: Response) => {
             let jour = date.substr(0,2)
             let mois = date.substr(3,2)
 
-            let codefinal = String("CU") + String(jour) + String(mois) + ("-") + String(codeint)
+            let codefinal = "CU" + jour + mois + "-" + codeint
 
             tiersdb.updateOne({"_id": new ObjectId(id)},{
                 $set : {code: codefinal}
@@ -84,6 +84,7 @@ routeur.post('/creertiers', async(req:Request, res: Response) => {
             let data : tiers = await tiersdb.findOne({"_id": new ObjectId(id)})
 
             res.json('ok')
+
         });
     }
 })
@@ -104,10 +105,20 @@ routeur.post('/search', async (req: Request, res: Response) => {
 
 routeur.post('/modifier', async (req: Request, res:Response) => {
     let reponse = await tiersdb.findOne({
-        "_id" : new ObjectId(req.body.id)
+        _id : new ObjectId(req.body.id)
     })
 
     res.json(reponse)
 })
+
+
+routeur.post('/supprimer', async (req: Request, res: Response) => {
+    tiersdb.deleteOne({
+        _id : new ObjectId(req.body.id)
+    })
+
+    res.json("ok")
+})
+
 
 export default routeur

@@ -9,7 +9,7 @@ import { getTiers } from './Composants/Redux/Reducers/tiers';
 import { getUsers } from './Composants/Redux/Reducers/user';
 import { getDevis } from './Composants/Redux/Reducers/devis';
 import { getFacture } from './Composants/Redux/Reducers/facture';
-import { getLigne } from './Composants/Redux/Reducers/ligne';
+import { delLigne, getLigne, modLigne } from './Composants/Redux/Reducers/ligne';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,7 +20,6 @@ store.dispatch(getUsers())
 store.dispatch(getDevis())
 store.dispatch(getFacture())
 
-store.dispatch(getLigne())
 
 root.render(
   <React.StrictMode>

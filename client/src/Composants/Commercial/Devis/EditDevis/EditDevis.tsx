@@ -6,7 +6,7 @@ import './EditDevis.css'
 import { useSelector} from "react-redux"
 import { RootState } from "../../../Redux/store";
 import logo from "../../../../Images/logoweb.png"
-import edit from "../../../../Images/logoweb.png"
+import edit from '../../../../Images/devis.png'
 import Corps from "../../../Corps/Corps";
 import CorpsFuncButton from "../../../Corps/CorpsFuncButton/CorpsFuncButton";
 import CorpsLigneAdd from "../../../Corps/CorpsLigneAdd/CorpsLigneAdd";
@@ -34,6 +34,7 @@ function EditDevis()
 
     const devis = useSelector((state: RootState) => state.devis.data)
 
+    const [devisRef, setDevisRef] = useState<string>()
     const [devisClient, setDevisClient] = useState<tiers>()
     const [devisStatus, setDevisStatus] = useState<string>("")
     const [devisDate, setdevisDate] = useState<string>("")
@@ -46,6 +47,7 @@ function EditDevis()
     useEffect(() => {
         if (devisunique)
         {
+            setDevisRef(devisunique.code)
             setDevisClient(devisunique.client)
             setdevisDate(devisunique.date)
             setdevisDureeValid(devisunique.dureeValid)
@@ -72,10 +74,11 @@ function EditDevis()
                         {/* Afficher les informations propre au devis sélectionner */}
                         {devisClient &&
                             <div>
-                                <p>Id : {id}</p>
+                                <p>Ref : {devisRef}</p>
+                                <p>Id du client : {devisClient.code}</p>
                                 <p>Type de client : {devisClient.type}</p>
                                 <p>Nom : {devisClient.nom}</p>
-                                <p>Adresse : {devisClient.adresse + " Code postal : "+ devisClient.codepostal + " Ville : " + devisClient.ville}</p>
+                                <p>Adresse : {devisClient.adresse + " "+ devisClient.codepostal + " " + devisClient.ville}</p>
                             </div>
                         }
                         <img src={logo}></img>
@@ -117,8 +120,12 @@ function EditDevis()
                         }
                     <div className="editdevis-infos-droite">
 
-                    </div>  
+                    </div>
+
                 </div>
+
+                <hr className="editdevis-titre-limite"></hr>
+
                 {/* <div className="editdevis-data-submit">
                     <button>Editer le devis</button>
                 </div> */}
