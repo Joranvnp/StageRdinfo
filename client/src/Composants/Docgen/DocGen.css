@@ -1,0 +1,77 @@
+.DocGen
+{
+    display:flex;
+    width:50%;
+    flex-direction:column;
+    height:auto;
+    margin-top:2%;
+    margin-bottom: 2%;
+}
+
+.docgen-titre
+{
+    display:flex;
+    width:100%;
+    align-items: center;
+    height:50px;
+    margin-left:2%;
+    position:relative;
+    background-color:gainsboro;
+}
+
+.docgen-titre p
+{
+    display:flex;
+    margin-left:2%;
+    width:100%;
+    font-size:15px;
+    color:black;
+}
+
+.docgen-titre button
+{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width:25%;
+    height:35px;
+    background-color: green;
+    color:white;
+    text-transform: uppercase;
+    font-weight: bold;
+    position:absolute;
+    left:20%;
+    border:1px solid green;
+    cursor:pointer;
+}
+
+.docgen-data
+{
+    display:flex;
+    position: relative;
+    width:100%;
+    align-items: center;
+    height:auto;
+}
+
+.docgen-data p
+{
+    margin-left:2%;
+}
+
+.docgen-data-pdf
+{
+    width:5%;
+    margin-left:2%;
+    margin-top:2%;
+}
+
+.docgen-data-loupe
+{
+    position:absolute;
+    top:10%;
+    left:30%;
+    width:5%;
+    margin-left:2%;
+    margin-top:2%;
+}

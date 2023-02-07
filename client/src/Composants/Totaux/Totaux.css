@@ -1,0 +1,36 @@
+.Totaux
+{
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    margin-right:4%;
+    height:auto;
+}
+
+.totaux-titre
+{
+    display:flex;
+    width:100%;
+    height:60px;
+    background-color: gainsboro;
+    align-items:center;
+}
+
+.totaux-titre h1
+{
+    margin-left:2%;
+    font-size:10px;
+}
+
+.totaux-data
+{
+    display:flex;
+    width:100%;
+    height:auto;
+    flex-direction:column;
+}
+
+.totaux-data p 
+{
+    font-size:15px;
+}

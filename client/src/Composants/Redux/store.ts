@@ -4,13 +4,15 @@ import userReducer from "./Reducers/user"
 import devisReducer from "./Reducers/devis"
 import factureReducer from "./Reducers/facture"
 import ligneReducer from "./Reducers/ligne"
+import totauxReducer from "./Reducers/totaux"
 
 const reducers = combineReducers({
     tiers: tiersReducer,
     users: userReducer,
     devis: devisReducer,
     facture: factureReducer,
-    ligne: ligneReducer
+    ligne: ligneReducer,
+    totaux: totauxReducer
 })
 
 const store = configureStore({

@@ -53,6 +53,9 @@ app.use("/api/facture", facture)
 import ligne from "./controleurs/ligne"
 app.use("/api/ligne", ligne)
 
+import totaux from "./controleurs/totaux"
+app.use("/api/totaux", totaux)
+
 //Mise en place du dossier Statique
 app.use(express.static(path.join(__dirname, '../../client/build')));
 

@@ -10,6 +10,8 @@ import edit from '../../../../Images/devis.png'
 import Corps from "../../../Corps/Corps";
 import CorpsFuncButton from "../../../Corps/CorpsFuncButton/CorpsFuncButton";
 import CorpsLigneAdd from "../../../Corps/CorpsLigneAdd/CorpsLigneAdd";
+import DocGen from "../../../Docgen/DocGen";
+import Totaux from "../../../Totaux/Totaux";
 
 type tiers = {
     _id: string,
@@ -119,7 +121,7 @@ function EditDevis()
                             </div>
                         }
                     <div className="editdevis-infos-droite">
-
+                        <Totaux id={id}></Totaux>
                     </div>
 
                 </div>
@@ -130,6 +132,7 @@ function EditDevis()
                     <button>Editer le devis</button>
                 </div> */}
                 <Corps id={id}></Corps>
+                <DocGen id={id}></DocGen>
             </div>
         </div>
     )
