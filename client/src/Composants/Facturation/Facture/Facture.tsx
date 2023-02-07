@@ -10,7 +10,6 @@ function Facture()
         <div className="Facture">
             <MenuFac></MenuFac>
             <div>
-                <h1></h1>
             </div>
         </div>
     )

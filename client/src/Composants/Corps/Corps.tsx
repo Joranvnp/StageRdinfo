@@ -57,6 +57,7 @@ function Corps(props: any) {
 
             <div className="corps-data-add">
                 <CorpsLigneAdd element={props.id}></CorpsLigneAdd>
+                <CorpsFuncButton id={props.id}></CorpsFuncButton>
             </div>      
 
             <br />

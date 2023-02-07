@@ -7,6 +7,7 @@ import { ObjectId } from "bson";
 import tiersdb from "../modeles/tiersdb";
 import lignedb from "../modeles/lignedb";
 import totauxdb from "../modeles/totauxdb";
+import { addDays, addMonths } from "date-fns";
 
 const routeur: IRouter = express.Router()
 
@@ -120,6 +121,33 @@ routeur.get("/getpdf", (req: Request, res: Response) => {
     {
         res.json('NOTPDF')
     }
+
+})
+
+routeur.post('/valider', async(req: Request, res: Response) => {
+
+    let dateMonthInt : Date = addMonths(new Date(), 1)
+    let dateMonthDate: number = new Date(dateMonthInt).getMonth()
+    let dateMonth: string = String(dateMonthDate).padStart(2, "0")
+
+    let dateDayInt : Date = new Date()
+    let dateDayDate : number = new Date(dateDayInt).getDate()
+    let dateDay: string = String(dateDayDate).padStart(2, "0")
+
+
+    let listeDevis : Array<devis> = await devisdb.find({}).toArray()
+
+    let nbdevis : number = Number(listeDevis.length)
+
+    let code : string = String(nbdevis).padStart(4, "0")
+
+    let codeFinal : String = "PR"+dateDay+dateMonth+"-"+code
+
+    let devisid = req.body.id
+    devisdb.updateOne({"_id": new ObjectId(devisid)}, {$set:{
+        code: codeFinal,
+        status : "finale"
+    }})
 
 })
 

@@ -9,7 +9,7 @@ function Facturation() {
         <div className="Facturation">
             <MenuFac></MenuFac>
             <div className="facture-link-tab">
-               <h1>Factures</h1>
+               <h2>Factures</h2>
             </div>
         </div>
     )
