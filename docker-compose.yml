@@ -1,0 +1,31 @@
+version : "3.6"
+services :
+  # Mongo Base de Données
+  mongo_db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - lan
+    volumes:
+      - db:/var/appli/database
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    environment:
+      - MONGO_INITDB_DATABASE=rdinfodb
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=rdinfo2023*
+  #Serveur Express
+  serveur:
+    image: app
+    ports:
+      - 5000:5000
+    depends_on: 
+      - mongo_db
+    networks:
+      - lan
+#VOLUMES NETWORK
+volumes:
+  db:
+networks:
+  lan:
+    driver: bridge
