@@ -19,7 +19,6 @@ const bson_1 = require("bson");
 const routeur = express_1.default.Router();
 routeur.post('/create', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { nom, prenom, email, login, password } = req.body.data;
-    console.log(nom);
     let saltCount = 10;
     let salt = yield bcrypt_1.default.genSaltSync(saltCount);
     let hashPassword = yield bcrypt_1.default.hashSync(password, salt);
@@ -49,7 +48,6 @@ routeur.post('/deletebyid', (req, res) => __awaiter(void 0, void 0, void 0, func
     res.json("ok");
 }));
 routeur.get('/info', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // console.log(req.user)
     res.json(req.user);
 }));
 routeur.get('/islogged', (req, res) => __awaiter(void 0, void 0, void 0, function* () {

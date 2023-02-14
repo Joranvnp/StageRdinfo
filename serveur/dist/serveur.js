@@ -35,6 +35,14 @@ const logout_1 = __importDefault(require("./controleurs/logout"));
 app.use("/api/logout", logout_1.default);
 const devis_1 = __importDefault(require("./controleurs/devis"));
 app.use("/api/devis", devis_1.default);
+const tiers_1 = __importDefault(require("./controleurs/tiers"));
+app.use("/api/tiers", tiers_1.default);
+const facture_1 = __importDefault(require("./controleurs/facture"));
+app.use("/api/facture", facture_1.default);
+const ligne_1 = __importDefault(require("./controleurs/ligne"));
+app.use("/api/ligne", ligne_1.default);
+const totaux_1 = __importDefault(require("./controleurs/totaux"));
+app.use("/api/totaux", totaux_1.default);
 //Mise en place du dossier Statique
 app.use(express_1.default.static(path_1.default.join(__dirname, '../../client/build')));
 //Pages non authentifi´ees

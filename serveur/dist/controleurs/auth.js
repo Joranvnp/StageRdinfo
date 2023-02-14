@@ -16,6 +16,7 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const userdb_1 = __importDefault(require("../modeles/userdb"));
 const passport_1 = __importDefault(require("passport"));
 const passport_local_1 = require("passport-local");
+const bson_1 = require("bson");
 passport_1.default.use(new passport_local_1.Strategy({
     usernameField: 'login',
     passwordField: 'password',
@@ -40,24 +41,24 @@ passport_1.default.serializeUser((user, done) => {
         id: user._id,
         date: new Date()
     };
-    // console.log(userInfos)
     done(null, userInfos);
 });
 passport_1.default.deserializeUser((userInfos, done) => __awaiter(void 0, void 0, void 0, function* () {
-    /*
-    let userdata = await usersdb.findOne({ "_id": new ObjectId(userInfos.id)})
-
-    let usergen : any = {
-        id: userdata._id,
-        nom: userdata.nom,
-        prenom: userdata.prenom,
-        email: userdata.email,
-        login: userdata.login,
-        date: userInfos.date
+    let userdata = yield userdb_1.default.findOne({ "_id": new bson_1.ObjectId(userInfos.id) });
+    if (userdata) {
+        let usergen = {
+            id: userdata._id,
+            nom: userdata.nom,
+            prenom: userdata.prenom,
+            email: userdata.email,
+            login: userdata.login,
+            date: userInfos.date
+        };
+        done(null, usergen);
     }
-
-    // console.log(userdata)
-    done(null, usergen)*/
+    else {
+        done("Utilisateur non trouvé", null);
+    }
 }));
 exports.default = passport_1.default;
 //# sourceMappingURL=auth.js.map

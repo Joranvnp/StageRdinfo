@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './CorpsFuncButton.css'
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
 function CorpsFuncButton(props: any) {
 
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+    }, [])
 
     const valider = () => {
         axios.post("/api/devis/valider", {

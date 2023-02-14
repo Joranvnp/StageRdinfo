@@ -18,6 +18,15 @@ export const getFacture : any = createAsyncThunk('/api/facture/list', async () =
     return reponse.data
 })
 
+export const setData: any = createAsyncThunk('/api/facture/editbyid', async (data) => {
+    
+    let reponse : AxiosResponse = await axios.post("/api/facture/editbyid", {
+        data: data
+    })
+
+    return reponse.data 
+})
+
 export const facture = createSlice ({
     name:'facture',
     initialState,
@@ -26,6 +35,9 @@ export const facture = createSlice ({
         [getFacture.fulfilled]: (state, action: PayloadAction<Array<facture>>) => {
             state.data = action.payload
         },
+        [setData.fulfilled]: (state, action: PayloadAction<Array<facture>>) => {
+            state.data = action.payload
+        }
     }
 })
 

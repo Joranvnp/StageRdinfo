@@ -33,12 +33,18 @@ routeur.get("/list", async(req:Request, res:Response) => {
 
 routeur.post("/editbyid", async(req:Request, res:Response) => {
 
-    const { id } = req.body.data
+    const { id, client, type } = req.body.data
 
-    let reponse = await facturedb.findOne({
-        "_id" : new ObjectId(id),
+    let reponse = await facturedb.updateOne({
+        "_id" : new ObjectId(id)
+    }, {
+        $set :{
+            client: client,
+            type:type
+        }
     })
 
+    console.log("salut")
     res.json(reponse)
 })
 

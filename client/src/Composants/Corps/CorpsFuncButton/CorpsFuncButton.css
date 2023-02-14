@@ -1,12 +1,19 @@
 .CorpsFuncButton {
     display: flex;
-    width: 100%;
-    height: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
-.corpsfuncbutton-data-actions {
+.corpsfuncbutton-data-actions button {
     background-color: green;
-    width: 10%;
-    height: 10%;
-    border: 2px solid black;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.corpsfuncbutton-data-actions button:hover {
+    background-color: lightgreen;
 }

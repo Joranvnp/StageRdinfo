@@ -13,8 +13,7 @@ type Tiers = {
     nom: string
 }
 
-function CreerFacture()
-{
+function CreerFacture() {
 
     const [listeTiers, setListeTiers] = useState<Array<Tiers>>([])
 
@@ -37,7 +36,7 @@ function CreerFacture()
 
     const createFacture = async () => {
 
-        let requete : Facture = {
+        let requete: Facture = {
             client: clientFacture,
             type: typeFacture
         }
@@ -47,10 +46,9 @@ function CreerFacture()
         })
 
 
-        if(reponse.data.message === "ok")
-        {
-            document.location.href = "/facture/edit/"+reponse.data.id
-        }   
+        if (reponse.data.message === "ok") {
+            document.location.href = "/facture/edit/" + reponse.data.id
+        }
 
         // console.log(requete)
     }
@@ -59,26 +57,32 @@ function CreerFacture()
         <div className="CreerFacture">
             <MenuFac></MenuFac>
             <div className="creerfacture-data-form">
-                <select value={clientFacture} onChange={handleClientFacture}>
-                    <option value={0}>Choisissez un client</option>
-                    {listeTiers.map(tier => (
-                        <option key={tier.id} value={tier.id}>{tier.nom}</option>
-                    ))}
-                </select>
 
-                <select value={typeFacture} onChange={handleTypeFacture}>
-                    <option value="">Choisissez un type de facture</option>
-                    <option value="standard">Facture standard</option>
-                    <option value="acompte">Facture d'acompte</option>
-                    <option value="remplacement">Facture de remplacement</option>
-                    <option value="avoir">Facture avoir</option>
-                    <option value="modele">Facture modèle</option>
-                </select>
+                <div className="creerfacture-data-form-gauche">
+                    <select className="select" value={clientFacture} onChange={handleClientFacture}>
+                        <option value={0}>Choisissez un client</option>
+                        {listeTiers.map(tier => (
+                            <option key={tier.id} value={tier.id}>{tier.nom}</option>
+                        ))}
+                    </select>
+                </div>  
 
+                <div className="creerfacture-data-form-gauche">
+                    <select className="select" value={typeFacture} onChange={handleTypeFacture}>
+                        <option value="">Choisissez un type de facture</option>
+                        <option value="standard">Facture standard</option>
+                        <option value="acompte">Facture d'acompte</option>
+                        <option value="remplacement">Facture de remplacement</option>
+                        <option value="avoir">Facture avoir</option>
+                        <option value="modele">Facture modèle</option>
+                    </select>
+                </div>
+
+                <div className="creerfacture-data-submit">
+                    <button onClick={createFacture} >Creer</button>
+                </div>
             </div>
-            <div className="creerfacture-data-submit">
-                <button  onClick={createFacture} >Creer</button>
-            </div>
+
         </div>
     )
 
