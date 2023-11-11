@@ -13,7 +13,7 @@ services :
     environment:
       - MONGO_INITDB_DATABASE=rdinfodb
       - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=rdinfo2023*
+      - MONGO_INITDB_ROOT_PASSWORD=
   #Serveur Express
   serveur:
     image: app
